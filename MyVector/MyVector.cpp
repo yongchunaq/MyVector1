@@ -22,7 +22,7 @@ public:
 	MyVector(size_t capactity);
 	MyVector(const ElemType& ele, size_t n);
 	MyVector(const MyVector<ElemType>& other);
-	~MyVector();
+	 ~MyVector();
 
 	ElemType& operator[](const size_t idx);
 	MyVector<ElemType> & operator=(const MyVector<ElemType>& other);
@@ -55,7 +55,7 @@ MyVector<ElemType>::MyVector(const ElemType& ele, size_t n)
 	_size = n;
 	_capacity = 2 * _size + 1;
 	vectorElem = new ElemType[_capacity];
-	for (size_t i = 0; i < _size; i++)
+	for (size_t i = 0; i < _size; ++i)
 	{
 		vectorElem[i] = ele;
 	}
@@ -79,7 +79,7 @@ MyVector<ElemType>& MyVector<ElemType>::operator=(const MyVector<ElemType> &othe
 	_capacity = other._capacity;
 	
 	vectorElem = new ElemType[_capacity];
-	for (size_t i = 0; i < _size; i++)
+	for (size_t i = 0; i < _size; ++i)
 	{
 		vectorElem[i] = other.vectorElem[i];
 		
@@ -109,10 +109,9 @@ void MyVector<ElemType>::reserve(size_t n){
 		ElemType *oldVectors = vectorElem;
 		vectorElem = new ElemType[n];
 		
-		for (size_t i = 0; i < _size; i++){
+		for (size_t i = 0; i < _size; ++i){
 			vectorElem[i] = oldVectors[i];
-		}	    
-		
+		}	    		
 		_capacity = n;
 		delete[] oldVectors;
 	}
@@ -138,10 +137,9 @@ void MyVector<ElemType>::pushBack(const ElemType& ele){
 		//cout << "the room is not enough!" << endl;
 		size_t newcapacity = 2 * _size;
 		reserve(newcapacity);
-	}
-	
+	}	
 	vectorElem[_size] = ele;
-		_size++;
+	++ _size;
 	
 		
 }
@@ -154,7 +152,7 @@ void MyVector<ElemType>::popBack(){
 	}
 	else
 	{
-		_size--;
+		-- _size;
 	}
 	//return vectorElem[_size];
 }
@@ -175,12 +173,12 @@ void MyVector<ElemType>::insert(size_t index, ElemType &ele)
 			reserve(2 * _size);
 		}
 		
-		for (size_t i = _size; i >= index; i--)
+		for (size_t i = _size; i >= index; --i)
 		{
 			vectorElem[i + 1] = vectorElem[i];
 		}
 		vectorElem[index] = ele;
-		_size++;
+		++ _size;
 		
 	}
 
@@ -206,11 +204,11 @@ void MyVector<ElemType>::erase(size_t index)
 	}
 	else
 	{
-		for (size_t i = index; i < _size-1; i++)
+		for (size_t i = index; i < _size-1; ++i)
 		{
 			vectorElem[i] = vectorElem[i + 1];
 		}
-		_size--;
+		-- _size;
 	}
 
 }
@@ -247,7 +245,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	myVector.erase(7);
 
 	anotherVector = myVector;
-	for (size_t i = 0; i < myVector.size(); i++){
+	for (size_t i = 0; i < myVector.size(); ++i){
 		cout << myVector[i] << endl;
 		//cout << anotherVector[i] << endl;
 	}
