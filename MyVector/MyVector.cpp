@@ -15,8 +15,9 @@ class MyVector{
 	
 public:
 	//??
-	typedef MyVector<ElemType>* iterator;
-	typedef const MyVector<ElemType>* const_iterator;
+	//typedef MyVector<ElemType>* iterator;
+	typedef ElemType* iterator;
+	//typedef const MyVector<ElemType>* const_iterator;
 
 	MyVector();
 	MyVector(size_t capactity);
@@ -26,8 +27,8 @@ public:
 
 	ElemType& operator[](const size_t idx);
 	MyVector<ElemType> & operator=(const MyVector<ElemType>& other);
-	size_t capacity();
-	size_t size();
+	size_t capacity() const;
+	size_t size() const;
 	void reserve(size_t n);
 	bool isEmpty();	
 	void pushBack(const ElemType& ele);
@@ -43,18 +44,17 @@ public:
 };
 
 template <typename ElemType>
-MyVector<ElemType>::MyVector(size_t size){
-	_size = size;
-	_capacity = 2 * _size + 1;
-	vectorElem = new ElemType[_capacity];
+MyVector<ElemType>::MyVector(size_t size):_size(size),_capacity(2*_size+1),vectorElem(new ElemType[2*_size+1]){
+	//_size = size;
+	//_capacity = 2 * _size + 1;
+	//vectorElem = new ElemType[_capacity];
 }
 
 template <typename ElemType>
-MyVector<ElemType>::MyVector(const ElemType& ele, size_t n)
-{
-	_size = n;
-	_capacity = 2 * _size + 1;
-	vectorElem = new ElemType[_capacity];
+MyVector<ElemType>::MyVector(const ElemType& ele, size_t n) :_size(n), _capacity(2 * _size + 1), vectorElem(new ElemType[2*_size+1]){
+	//_size = n;
+	//_capacity = 2 * _size + 1;
+	//vectorElem = new ElemType[_capacity];
 	for (size_t i = 0; i < _size; ++i)
 	{
 		vectorElem[i] = ele;
@@ -89,12 +89,12 @@ MyVector<ElemType>& MyVector<ElemType>::operator=(const MyVector<ElemType> &othe
 }
 
 template <typename ElemType>
-size_t MyVector<ElemType>::capacity(){
+size_t MyVector<ElemType>::capacity() const{
 	return _capacity;
 }
 
 template <typename ElemType>
-size_t MyVector<ElemType>::size(){
+size_t MyVector<ElemType>::size() const{
 	return _size;
 }
 
@@ -159,8 +159,7 @@ void MyVector<ElemType>::popBack(){
 
 template <typename ElemType>
 //index caculate from 0
-void MyVector<ElemType>::insert(size_t index, ElemType &ele)
-{
+void MyVector<ElemType>::insert(size_t index, ElemType &ele){
 	if (index > _size+1)
 	{
 		cout << "invaild index!" << endl;
@@ -185,8 +184,7 @@ void MyVector<ElemType>::insert(size_t index, ElemType &ele)
 }
 
 template <typename ElemType>
-void MyVector<ElemType>::insertByIterator(iterator position, ElemType &ele)
-{
+void MyVector<ElemType>::insertByIterator(iterator position, ElemType &ele){
 	//? why size_t = MyVector<ElemType> - MyVector<Ele,Type>
 	size_t index = position - begin();
 	cout << "the index is:" << index << endl;
@@ -196,8 +194,7 @@ void MyVector<ElemType>::insertByIterator(iterator position, ElemType &ele)
 
 template <typename ElemType>
 //index caculate from 0
-void MyVector<ElemType>::erase(size_t index)
-{
+void MyVector<ElemType>::erase(size_t index){
 	if (index >= _size || index < 0)
 	{
 		cout << "invaild index!" << endl;
@@ -214,20 +211,19 @@ void MyVector<ElemType>::erase(size_t index)
 }
 
 template <typename ElemType>
-void MyVector<ElemType>::eraseByIterator(iterator position)
-{
+void MyVector<ElemType>::eraseByIterator(iterator position){
 	size_t index = position - begin();
 	erase(index);
 }
 
-int _tmain(int argc, _TCHAR* argv[])
-{
+int _tmain(int argc, _TCHAR* argv[]){
 	
 	MyVector<size_t> myVector(99,2);
 	MyVector<size_t> anotherVector(0);
 	MyVector<size_t>::iterator itr;
-	
+
 	cout << myVector.capacity() << endl;
+	cout << myVector.begin() << endl;
 	myVector.reserve(20);
 	
 	myVector.isEmpty();
